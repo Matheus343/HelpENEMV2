@@ -10,17 +10,25 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@expo/vector-icons": "^14.0.2",
+    "@react-native-picker/picker": "2.9.0",
+    "@react-navigation/drawer": "^7.0.6",
     "@react-navigation/native": "^7.0.3",
     "@react-navigation/stack": "^7.0.5",
     "body-parser": "^1.20.3",
     "expo": "~52.0.9",
+    "expo-image-picker": "~16.0.2",
     "expo-status-bar": "~2.0.0",
     "express": "^4.21.1",
     "react": "18.3.1",
     "react-native": "0.76.2",
-    "sqlite3": "^5.1.7",
-    "expo-image-picker": "~16.0.2",
-    "@expo/vector-icons": "^14.0.2"
+    "react-native-gesture-handler": "^2.21.2",
+    "react-native-get-random-values": "^1.11.0",
+    "react-native-reanimated": "^3.16.2",
+    "react-native-safe-area-context": "^4.14.0",
+    "react-native-screens": "^4.2.0",
+    "react-native-vector-icons": "^10.2.0",
+    "sqlite3": "^5.1.7"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

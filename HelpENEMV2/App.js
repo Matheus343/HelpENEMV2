@@ -6,7 +6,7 @@ import Cadastro from './frontend/screens/Cadastro.js';
 import Ajuda from './frontend/screens/Ajuda.js';
 import TelaInicio from './frontend/screens/TelaInicio.js';
 import LoginAdmin from './frontend/screens/LoginAdmin.js';
-import PainelAdmin from './frontend/screens/PainelAdmin.js';
+import PainelAdmin from './frontend/screens/PainelAdmin';
 
 const Stack = createStackNavigator();
 

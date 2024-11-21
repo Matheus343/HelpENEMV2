@@ -1,15 +1,15 @@
 const LivroModel = require('../models/LivroModel');
 
 exports.create = (req, res) => {
-  const livro = req.body;
+  const { nomeLivro, autor, materia } = req.body;
 
-  if (!livro.nomeLivro || !livro.autor || !livro.materia) {
+  if (!nomeLivro || !autor || !materia) {
     return res.status(400).json({ error: 'Preencha todos os campos obrigatórios!' });
   }
 
-  LivroModel.create(livro, (err, id) => {
+  LivroModel.create({ nomeLivro, autor, materia }, (err, id) => {
     if (err) {
-      return res.status(500).json({ error: 'Erro ao cadastrar livro.' });
+      return res.status(500).json({ error: 'Erro ao cadastrar o livro.' });
     }
     res.status(201).json({ message: 'Livro cadastrado com sucesso!', id });
   });
@@ -18,7 +18,7 @@ exports.create = (req, res) => {
 exports.getAll = (req, res) => {
   LivroModel.findAll((err, livros) => {
     if (err) {
-      return res.status(500).json({ error: 'Erro ao buscar livros.' });
+      return res.status(500).json({ error: 'Erro ao buscar os livros.' });
     }
     res.status(200).json(livros);
   });
@@ -29,7 +29,7 @@ exports.getById = (req, res) => {
 
   LivroModel.findById(id, (err, livro) => {
     if (err) {
-      return res.status(500).json({ error: 'Erro ao buscar livro.' });
+      return res.status(500).json({ error: 'Erro ao buscar o livro.' });
     }
 
     if (!livro) {
@@ -42,15 +42,15 @@ exports.getById = (req, res) => {
 
 exports.update = (req, res) => {
   const { id } = req.params;
-  const livro = req.body;
+  const { nomeLivro, autor, materia } = req.body;
 
-  if (!livro.nomeLivro || !livro.autor || !livro.materia) {
+  if (!nomeLivro || !autor || !materia) {
     return res.status(400).json({ error: 'Preencha todos os campos obrigatórios!' });
   }
 
-  LivroModel.update(id, livro, (err, changes) => {
+  LivroModel.update(id, { nomeLivro, autor, materia }, (err, changes) => {
     if (err) {
-      return res.status(500).json({ error: 'Erro ao atualizar livro.' });
+      return res.status(500).json({ error: 'Erro ao atualizar o livro.' });
     }
 
     if (changes === 0) {
@@ -66,7 +66,7 @@ exports.delete = (req, res) => {
 
   LivroModel.delete(id, (err, changes) => {
     if (err) {
-      return res.status(500).json({ error: 'Erro ao excluir livro.' });
+      return res.status(500).json({ error: 'Erro ao excluir o livro.' });
     }
 
     if (changes === 0) {

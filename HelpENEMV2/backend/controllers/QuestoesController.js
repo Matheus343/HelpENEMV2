@@ -1,15 +1,15 @@
 const QuestoesModel = require('../models/QuestoesModel');
 
 exports.create = (req, res) => {
-  const questao = req.body;
+  const { pergunta, resposta, nivel } = req.body;
 
-  if (!questao.pergunta || !questao.resposta || !questao.nivel) {
+  if (!pergunta || !resposta || !nivel) {
     return res.status(400).json({ error: 'Preencha todos os campos obrigatórios!' });
   }
 
-  QuestoesModel.create(questao, (err, id) => {
+  QuestoesModel.create({ pergunta, resposta, nivel }, (err, id) => {
     if (err) {
-      return res.status(500).json({ error: 'Erro ao cadastrar questão.' });
+      return res.status(500).json({ error: 'Erro ao cadastrar a questão.' });
     }
     res.status(201).json({ message: 'Questão cadastrada com sucesso!', id });
   });
@@ -18,7 +18,7 @@ exports.create = (req, res) => {
 exports.getAll = (req, res) => {
   QuestoesModel.findAll((err, questoes) => {
     if (err) {
-      return res.status(500).json({ error: 'Erro ao buscar questões.' });
+      return res.status(500).json({ error: 'Erro ao buscar as questões.' });
     }
     res.status(200).json(questoes);
   });
@@ -29,7 +29,7 @@ exports.getById = (req, res) => {
 
   QuestoesModel.findById(id, (err, questao) => {
     if (err) {
-      return res.status(500).json({ error: 'Erro ao buscar questão.' });
+      return res.status(500).json({ error: 'Erro ao buscar a questão.' });
     }
 
     if (!questao) {
@@ -42,15 +42,15 @@ exports.getById = (req, res) => {
 
 exports.update = (req, res) => {
   const { id } = req.params;
-  const questao = req.body;
+  const { pergunta, resposta, nivel } = req.body;
 
-  if (!questao.pergunta || !questao.resposta || !questao.nivel) {
+  if (!pergunta || !resposta || !nivel) {
     return res.status(400).json({ error: 'Preencha todos os campos obrigatórios!' });
   }
 
-  QuestoesModel.update(id, questao, (err, changes) => {
+  QuestoesModel.update(id, { pergunta, resposta, nivel }, (err, changes) => {
     if (err) {
-      return res.status(500).json({ error: 'Erro ao atualizar questão.' });
+      return res.status(500).json({ error: 'Erro ao atualizar a questão.' });
     }
 
     if (changes === 0) {
@@ -66,7 +66,7 @@ exports.delete = (req, res) => {
 
   QuestoesModel.delete(id, (err, changes) => {
     if (err) {
-      return res.status(500).json({ error: 'Erro ao excluir questão.' });
+      return res.status(500).json({ error: 'Erro ao excluir a questão.' });
     }
 
     if (changes === 0) {

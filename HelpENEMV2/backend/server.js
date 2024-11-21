@@ -11,7 +11,7 @@ const PORT = 3000;
 app.use(bodyParser.json());
 
 app.use('/aluno', AlunoRouter);
-app.use('/livro', LivroRouter);
+app.use('/livros', LivroRouter);
 app.use('/questoes', QuestoesRouter);
 app.use('/admin', AdminRouter);
 

@@ -22,7 +22,7 @@ const LoginAdmin = ({ navigation }) => {
 
       if (response.ok) {
         Alert.alert('Sucesso', 'Bem-vindo, Administrador!');
-        navigation.navigate('PainelAdmin'); // Redireciona para o painel de administrador
+        navigation.navigate('PainelAdmin'); 
       } else {
         Alert.alert('Erro', data.error || 'RA ou senha inválidos.');
       }
