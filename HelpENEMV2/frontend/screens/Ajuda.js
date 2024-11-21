@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Linking, TouchableOpacity } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons'; // Biblioteca para ícones
+import { FontAwesome } from '@expo/vector-icons'; 
 
 const Ajuda = () => {
   const colaboradores = [

@@ -6,7 +6,7 @@ const CrudQuestoes = () => {
   const [questoes, setQuestoes] = useState([]);
   const [pergunta, setPergunta] = useState('');
   const [resposta, setResposta] = useState('');
-  const [nivel, setNivel] = useState('facil'); // Nível padrão
+  const [nivel, setNivel] = useState('facil'); 
   const [editandoId, setEditandoId] = useState(null);
 
   const fetchQuestoes = async () => {
