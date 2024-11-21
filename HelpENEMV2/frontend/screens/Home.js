@@ -6,7 +6,7 @@ const Home = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Image
-        source={require('C:/Users/Pichau/Downloads/Programas/Faculdade/HelpENEMV2/HelpENEMV2/assets/logo2Enem-removebg-preview.png')}
+        source={require('../../assets/logo2Enem-removebg-preview.png')}
         style={styles.image}
       />
 
