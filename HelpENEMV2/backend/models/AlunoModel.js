@@ -1,14 +1,15 @@
 const db = require('../config/database');
 
 exports.create = (aluno, callback) => {
-  const query = `
-    INSERT INTO alunos (nome, senha, cep, dataNascimento, cpf, foto)
-    VALUES (?, ?, ?, ?, ?, ?)
-  `;
-  db.run(query, [aluno.nome, aluno.senha, aluno.cep, aluno.dataNascimento, aluno.cpf, aluno.foto], function (err) {
-    callback(err, this.lastID);
-  });
-};
+    const query = `
+      INSERT INTO alunos (nome, senha, cep, dataNascimento, cpf)
+      VALUES (?, ?, ?, ?, ?)
+    `;
+    db.run(query, [aluno.nome, aluno.senha, aluno.cep, aluno.dataNascimento, aluno.cpf], function (err) {
+      callback(err, this.lastID);
+    });
+  };
+  
 
 exports.findByCpf = (cpf, callback) => {
   const query = `SELECT * FROM alunos WHERE cpf = ?`;

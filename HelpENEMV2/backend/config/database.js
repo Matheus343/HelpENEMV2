@@ -17,8 +17,7 @@ db.serialize(() => {
       senha TEXT NOT NULL,
       cep TEXT NOT NULL,
       dataNascimento TEXT NOT NULL,
-      cpf TEXT UNIQUE NOT NULL,
-      foto TEXT
+      cpf TEXT UNIQUE NOT NULL
     )
   `);
 
