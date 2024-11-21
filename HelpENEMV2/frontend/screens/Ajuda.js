@@ -1,7 +1,14 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Linking, TouchableOpacity } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons'; // Biblioteca para ícones
 
 const Ajuda = () => {
+  const colaboradores = [
+    { nome: 'Adriana Monteiro Martani', github: 'https://github.com/adrianamartani' },
+    { nome: 'Matheus Galdino Xavier', github: 'https://github.com/Matheus343' },
+    { nome: 'Yasmin Laisa Maciel', github: 'https://github.com/yasmin21Eng' },
+  ];
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Sobre o HelpENEM</Text>
@@ -11,9 +18,17 @@ const Ajuda = () => {
         livros. É uma ferramenta prática e acessível para estudar de forma eficiente.
       </Text>
       <Text style={styles.subtitle}>Criadores:</Text>
-      <Text style={styles.text}>Adriana Monteiro Martani</Text>
-      <Text style={styles.text}>Matheus Galdino Xavier</Text>
-      <Text style={styles.text}>Yasmin Laisa Maciel</Text>
+      {colaboradores.map((colaborador, index) => (
+        <View key={index} style={styles.collaboratorContainer}>
+          <Text style={styles.text}>{colaborador.nome}</Text>
+          <TouchableOpacity
+            onPress={() => Linking.openURL(colaborador.github)}
+            style={styles.icon}
+          >
+            <FontAwesome name="github" size={24} color="#000" />
+          </TouchableOpacity>
+        </View>
+      ))}
     </View>
   );
 };
@@ -42,6 +57,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 10,
     color: '#333',
+  },
+  collaboratorContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  icon: {
+    marginLeft: 10,
   },
 });
 

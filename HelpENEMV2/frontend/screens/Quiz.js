@@ -59,7 +59,7 @@ const Quiz = () => {
     'Alternativa 1',
     'Alternativa 2',
     'Alternativa 3',
-  ].sort(() => Math.random() - 0.5); // Embaralhar alternativas
+  ].sort(() => Math.random() - 0.5);
 
   return (
     <View style={styles.container}>
@@ -97,16 +97,16 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   question: {
-    fontSize: 18,
+    fontSize: 15,
     textAlign: 'center',
     marginBottom: 20,
   },
   button: {
     backgroundColor: '#8f5bbd',
-    padding: 15,
-    borderRadius: 8,
+    padding: 10,
+    borderRadius: 60,
     alignItems: 'center',
-    width: '80%',
+    width: '60%',
     marginVertical: 10,
   },
   buttonText: {

@@ -27,7 +27,8 @@ db.serialize(() => {
       nomeLivro TEXT NOT NULL,
       autor TEXT NOT NULL,
       materia TEXT NOT NULL,
-      imagem TEXT
+      imagem TEXT,
+      link TEXT NOT NULL
     )
   `);
 

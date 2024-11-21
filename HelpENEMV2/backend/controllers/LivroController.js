@@ -1,13 +1,13 @@
 const LivroModel = require('../models/LivroModel');
 
 exports.create = (req, res) => {
-  const { nomeLivro, autor, materia } = req.body;
+  const { nomeLivro, autor, materia, link } = req.body;
 
-  if (!nomeLivro || !autor || !materia) {
+  if (!nomeLivro || !autor || !materia || !link) {
     return res.status(400).json({ error: 'Preencha todos os campos obrigatórios!' });
   }
 
-  LivroModel.create({ nomeLivro, autor, materia }, (err, id) => {
+  LivroModel.create({ nomeLivro, autor, materia, link }, (err, id) => {
     if (err) {
       return res.status(500).json({ error: 'Erro ao cadastrar o livro.' });
     }
@@ -42,9 +42,9 @@ exports.getById = (req, res) => {
 
 exports.update = (req, res) => {
   const { id } = req.params;
-  const { nomeLivro, autor, materia } = req.body;
+  const { nomeLivro, autor, materia, link } = req.body;
 
-  if (!nomeLivro || !autor || !materia) {
+  if (!nomeLivro || !autor || !materia || !link) {
     return res.status(400).json({ error: 'Preencha todos os campos obrigatórios!' });
   }
 

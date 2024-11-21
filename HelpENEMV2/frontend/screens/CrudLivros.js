@@ -6,7 +6,8 @@ const CrudLivros = () => {
   const [livros, setLivros] = useState([]);
   const [nomeLivro, setNomeLivro] = useState('');
   const [autor, setAutor] = useState('');
-  const [materia, setMateria] = useState('Fisica'); 
+  const [materia, setMateria] = useState('Fisica');
+  const [link, setLink] = useState('');
   const [editandoId, setEditandoId] = useState(null);
 
   const fetchLivros = async () => {
@@ -20,7 +21,7 @@ const CrudLivros = () => {
   };
 
   const handleSalvar = async () => {
-    if (!nomeLivro || !autor || !materia) {
+    if (!nomeLivro || !autor || !materia || !link) {
       Alert.alert('Erro', 'Preencha todos os campos!');
       return;
     }
@@ -34,7 +35,7 @@ const CrudLivros = () => {
       const response = await fetch(url, {
         method: metodo,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nomeLivro, autor, materia }),
+        body: JSON.stringify({ nomeLivro, autor, materia, link }),
       });
 
       if (response.ok) {
@@ -42,7 +43,8 @@ const CrudLivros = () => {
         fetchLivros();
         setNomeLivro('');
         setAutor('');
-        setMateria('Fisica'); 
+        setMateria('Fisica');
+        setLink('');
         setEditandoId(null);
       } else {
         Alert.alert('Erro', 'Erro ao salvar o livro.');
@@ -109,6 +111,13 @@ const CrudLivros = () => {
         </Picker>
       </View>
 
+      <TextInput
+        style={styles.input}
+        placeholder="Link do Livro"
+        value={link}
+        onChangeText={setLink}
+      />
+
       <TouchableOpacity style={styles.button} onPress={handleSalvar}>
         <Text style={styles.buttonText}>{editandoId ? 'Atualizar' : 'Salvar'}</Text>
       </TouchableOpacity>
@@ -121,12 +130,16 @@ const CrudLivros = () => {
             <Text>{item.nomeLivro}</Text>
             <Text>{item.autor}</Text>
             <Text>{item.materia}</Text>
-            <TouchableOpacity onPress={() => {
-              setNomeLivro(item.nomeLivro);
-              setAutor(item.autor);
-              setMateria(item.materia);
-              setEditandoId(item.id);
-            }}>
+            <Text>{item.link}</Text>
+            <TouchableOpacity
+              onPress={() => {
+                setNomeLivro(item.nomeLivro);
+                setAutor(item.autor);
+                setMateria(item.materia);
+                setLink(item.link);
+                setEditandoId(item.id);
+              }}
+            >
               <Text style={styles.edit}>Editar</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => handleExcluir(item.id)}>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, FlatList, StyleSheet, Image } from 'react-native';
+import { View, Text, TextInput, FlatList, StyleSheet, Image, TouchableOpacity, Linking } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 
 const Biblioteca = () => {
   const [livros, setLivros] = useState([]);
@@ -40,6 +41,14 @@ const Biblioteca = () => {
     }
   };
 
+  const abrirLink = (url) => {
+    if (url) {
+      Linking.openURL(url).catch((err) => console.error('Erro ao abrir o link:', err));
+    } else {
+      alert('Link indisponível.');
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Biblioteca</Text>
@@ -65,6 +74,9 @@ const Biblioteca = () => {
               <Text style={styles.itemText}>Autor: {item.autor}</Text>
               <Text style={styles.itemText}>Matéria: {item.materia}</Text>
             </View>
+            <TouchableOpacity onPress={() => abrirLink(item.link)}>
+              <MaterialIcons name="file-download" size={28} color="#8f5bbd" />
+            </TouchableOpacity>
           </View>
         )}
         ListEmptyComponent={<Text style={styles.empty}>Nenhum livro encontrado.</Text>}
@@ -95,6 +107,7 @@ const styles = StyleSheet.create({
   },
   item: {
     flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: 10,
     padding: 10,
     borderWidth: 1,

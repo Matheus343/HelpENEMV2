@@ -2,10 +2,10 @@ const db = require('../config/database');
 
 exports.create = (livro, callback) => {
   const query = `
-    INSERT INTO livros (nomeLivro, autor, materia)
-    VALUES (?, ?, ?)
+    INSERT INTO livros (nomeLivro, autor, materia, link)
+    VALUES (?, ?, ?, ?)
   `;
-  db.run(query, [livro.nomeLivro, livro.autor, livro.materia], function (err) {
+  db.run(query, [livro.nomeLivro, livro.autor, livro.materia, livro.link], function (err) {
     callback(err, this.lastID);
   });
 };
@@ -23,10 +23,10 @@ exports.findById = (id, callback) => {
 exports.update = (id, livro, callback) => {
   const query = `
     UPDATE livros
-    SET nomeLivro = ?, autor = ?, materia = ?
+    SET nomeLivro = ?, autor = ?, materia = ?, link = ?
     WHERE id = ?
   `;
-  db.run(query, [livro.nomeLivro, livro.autor, livro.materia, id], function (err) {
+  db.run(query, [livro.nomeLivro, livro.autor, livro.materia, livro.link, id], function (err) {
     callback(err, this.changes);
   });
 };

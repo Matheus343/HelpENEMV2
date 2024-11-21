@@ -1,8 +1,33 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import { Audio } from 'expo-av';
 
 const Home = ({ navigation }) => {
+  useEffect(() => {
+    let sound;
+
+    const loadSound = async () => {
+      try {
+        sound = new Audio.Sound(); 
+        await sound.loadAsync(require('../../assets/background-music.mp3'));
+        await sound.setIsLoopingAsync(true); 
+        await sound.playAsync(); 
+      } catch (error) {
+        console.error('Erro ao carregar o som:', error);
+      }
+    };
+
+    loadSound();
+
+    return () => {
+      if (sound) {
+        sound.stopAsync(); 
+        sound.unloadAsync(); 
+      }
+    };
+  }, []);
+
   return (
     <View style={styles.container}>
       <Image
@@ -52,9 +77,9 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   image: {
-    width: 400, 
-    height: 200, 
-    marginBottom: 20, 
+    width: 400,
+    height: 200,
+    marginBottom: 20,
     marginLeft: 15,
   },
   title: {
