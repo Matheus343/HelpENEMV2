@@ -1,33 +1,30 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 
-const Login = ({ navigation }) => {
-  const [cpf, setCpf] = useState('');
+const LoginAdmin = ({ navigation }) => {
+  const [ra, setRa] = useState('');
   const [senha, setSenha] = useState('');
 
   const handleLogin = async () => {
-    const trimmedCpf = cpf.trim();
-    const trimmedSenha = senha.trim();
-
-    if (!trimmedCpf || !trimmedSenha) {
+    if (!ra || !senha) {
       Alert.alert('Erro', 'Preencha todos os campos obrigatórios!');
       return;
     }
 
     try {
-      const response = await fetch('http://192.168.15.135:3000/aluno/login', {
+      const response = await fetch('http://192.168.15.135:3000/admin/loginAdmin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ cpf: trimmedCpf, senha: trimmedSenha }),
+        body: JSON.stringify({ ra, senha }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        Alert.alert('Sucesso', 'Login realizado com sucesso!');
-        navigation.navigate('TelaInicio'); 
+        Alert.alert('Sucesso', 'Bem-vindo, Administrador!');
+        navigation.navigate('PainelAdmin'); // Redireciona para o painel de administrador
       } else {
-        Alert.alert('Erro', data.error || 'CPF ou senha inválidos.');
+        Alert.alert('Erro', data.error || 'RA ou senha inválidos.');
       }
     } catch (error) {
       Alert.alert('Erro', 'Erro ao conectar ao servidor.');
@@ -36,14 +33,14 @@ const Login = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
+      <Text style={styles.title}>Login do Administrador</Text>
 
       <TextInput
         style={styles.input}
-        placeholder="CPF"
+        placeholder="RA"
         keyboardType="numeric"
-        value={cpf}
-        onChangeText={setCpf}
+        value={ra}
+        onChangeText={setRa}
       />
 
       <TextInput
@@ -56,10 +53,6 @@ const Login = ({ navigation }) => {
 
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Entrar</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity onPress={() => navigation.navigate('Cadastro')}>
-        <Text style={styles.linkText}>Não tem uma conta? Cadastre-se</Text>
       </TouchableOpacity>
     </View>
   );
@@ -100,10 +93,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
-  linkText: {
-    color: '#007BFF',
-    fontSize: 16,
-  },
 });
 
-export default Login;
+export default LoginAdmin;

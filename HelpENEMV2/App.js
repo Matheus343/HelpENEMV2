@@ -5,6 +5,8 @@ import Login from './frontend/screens/Login.js';
 import Cadastro from './frontend/screens/Cadastro.js';
 import Ajuda from './frontend/screens/Ajuda.js';
 import TelaInicio from './frontend/screens/TelaInicio.js';
+import LoginAdmin from './frontend/screens/LoginAdmin.js';
+import PainelAdmin from './frontend/screens/PainelAdmin.js';
 
 const Stack = createStackNavigator();
 
@@ -17,6 +19,8 @@ export default function App() {
         <Stack.Screen name="Cadastro" component={Cadastro} />
         <Stack.Screen name="Ajuda" component={Ajuda} />
         <Stack.Screen name="TelaInicio" component={TelaInicio} />
+        <Stack.Screen name="LoginAdmin" component={LoginAdmin} />
+        <Stack.Screen name="PainelAdmin" component={PainelAdmin} />
       </Stack.Navigator>
     </NavigationContainer>
   );

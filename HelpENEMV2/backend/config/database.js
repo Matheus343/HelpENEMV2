@@ -38,6 +38,23 @@ db.serialize(() => {
       nivel TEXT NOT NULL
     )
   `);
+  db.run(`
+    CREATE TABLE IF NOT EXISTS administrador (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      nome TEXT NOT NULL,
+      ra TEXT NOT NULL UNIQUE,
+      senha TEXT NOT NULL
+    )
+  `);
+  
+  db.get(`SELECT * FROM administrador WHERE ra = ?`, ['082210042'], (err, row) => {
+    if (!row) {
+      db.run(`
+        INSERT INTO administrador (nome, ra, senha)
+        VALUES (?, ?, ?)
+      `, ['Administrador', '082210042', 'Admin@123']);
+    }
+  });
 });
 
 module.exports = db;

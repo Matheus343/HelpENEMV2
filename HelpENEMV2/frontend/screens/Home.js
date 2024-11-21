@@ -1,14 +1,17 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
 const Home = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      {/* Título da aplicação */}
-      <Text style={styles.title}>Bem-vindo ao HelpENEM!</Text>
+      <Image
+        source={require('C:/Users/Pichau/Downloads/Programas/Faculdade/HelpENEMV2/HelpENEMV2/assets/logo2Enem-removebg-preview.png')}
+        style={styles.image}
+      />
 
-      {/* Botão para Login */}
+      <Text style={styles.title}>Bem-vindo!</Text>
+
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate('Login')}
@@ -16,7 +19,6 @@ const Home = ({ navigation }) => {
         <Text style={styles.buttonText}>Entrar</Text>
       </TouchableOpacity>
 
-      {/* Botão para Cadastro */}
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate('Cadastro')}
@@ -24,7 +26,13 @@ const Home = ({ navigation }) => {
         <Text style={styles.buttonText}>Cadastrar</Text>
       </TouchableOpacity>
 
-      {/* Botão de Ajuda (ícone circular) */}
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('LoginAdmin')}
+      >
+        <Text style={styles.buttonText}>Acessar como Admin</Text>
+      </TouchableOpacity>
+
       <TouchableOpacity
         style={styles.helpButton}
         onPress={() => navigation.navigate('Ajuda')}
@@ -43,16 +51,22 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5f5f5',
     padding: 20,
   },
+  image: {
+    width: 400, 
+    height: 200, 
+    marginBottom: 20, 
+    marginLeft: 15,
+  },
   title: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 40,
   },
   button: {
-    backgroundColor: '#4CAF50',
-    padding: 15,
-    borderRadius: 8,
-    width: '80%',
+    backgroundColor: '#8f5bbd',
+    padding: 10,
+    borderRadius: 60,
+    width: '60%',
     alignItems: 'center',
     marginBottom: 20,
   },
@@ -65,7 +79,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 30,
     right: 30,
-    backgroundColor: '#007BFF',
+    backgroundColor: '#8f5bbd',
     width: 60,
     height: 60,
     borderRadius: 30,
