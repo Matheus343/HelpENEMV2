@@ -14,6 +14,7 @@ app.use('/aluno', AlunoRouter);
 app.use('/livros', LivroRouter);
 app.use('/questoes', QuestoesRouter);
 app.use('/admin', AdminRouter);
+app.use('/uploads', express.static('uploads'));
 
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);

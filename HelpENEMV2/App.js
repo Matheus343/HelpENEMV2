@@ -8,6 +8,7 @@ import Ajuda from './frontend/screens/Ajuda.js';
 import TelaInicio from './frontend/screens/TelaInicio.js';
 import LoginAdmin from './frontend/screens/LoginAdmin.js';
 import PainelAdmin from './frontend/screens/PainelAdmin';
+import Biblioteca from './frontend/screens/Biblioteca.js';
 
 import { AlunoProvider } from './frontend/context/AlunoContext';
 
@@ -25,6 +26,7 @@ export default function App() {
           <Stack.Screen name="TelaInicio" component={TelaInicio} />
           <Stack.Screen name="LoginAdmin" component={LoginAdmin} />
           <Stack.Screen name="PainelAdmin" component={PainelAdmin} />
+          <Stack.Screen name="Biblioteca" component={Biblioteca} />
         </Stack.Navigator>
       </NavigationContainer>
     </AlunoProvider>

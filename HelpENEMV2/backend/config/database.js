@@ -26,7 +26,8 @@ db.serialize(() => {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       nomeLivro TEXT NOT NULL,
       autor TEXT NOT NULL,
-      materia TEXT NOT NULL
+      materia TEXT NOT NULL,
+      imagem TEXT
     )
   `);
 

@@ -47,10 +47,23 @@ const Dashboard = () => {
         materias[livro.materia] = (materias[livro.materia] || 0) + 1;
       });
 
+      const coresFixas = {
+        Fisica: '#4CAF50',
+        Quimica: '#FF5722',
+        Portugues: '#3F51B5',
+        Matematica: '#9C27B0',
+        Literatura: '#009688',
+        Historia: '#FFC107',
+        Geografia: '#8BC34A',
+        Ingles: '#00BCD4',
+        Espanhol: '#E91E63',
+        Redacao: '#795548',
+      };
+
       const chartData = Object.entries(materias).map(([key, value]) => ({
         name: key,
         count: value,
-        color: getRandomColor(), // Função para cores aleatórias
+        color: coresFixas[key] || '#000000', // Cor fixa ou preto como fallback
         legendFontColor: '#7F7F7F',
         legendFontSize: 15,
       }));
@@ -59,10 +72,6 @@ const Dashboard = () => {
     } catch (error) {
       console.error('Erro ao buscar dados dos livros:', error);
     }
-  };
-
-  const getRandomColor = () => {
-    return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
   };
 
   return (
