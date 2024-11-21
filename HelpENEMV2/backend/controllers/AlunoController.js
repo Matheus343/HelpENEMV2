@@ -82,3 +82,4 @@ exports.delete = (req, res) => {
     res.status(200).json({ message: 'Aluno excluído com sucesso!' });
   });
 };
+
