@@ -10,7 +10,7 @@ const Home = ({ navigation }) => {
     const loadSound = async () => {
       try {
         sound = new Audio.Sound(); 
-        await sound.loadAsync(require('../../assets/background-music.mp3'));
+        await sound.loadAsync(require('../../assets/lofi-study-calm-peaceful-chill-hop-112191.mp3'));
         await sound.setIsLoopingAsync(true); 
         await sound.playAsync(); 
       } catch (error) {
