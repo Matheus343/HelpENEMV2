@@ -19,11 +19,11 @@ import CrudQuestoes from './CrudQuestoes';
 
 const fetchDadosProtegidos = async (endpoint) => {
   try {
-    const token = await AsyncStorage.getItem('token'); // Recupera o token armazenado
+    const token = await AsyncStorage.getItem('token'); 
     const response = await fetch(`http://192.168.15.135:3000/${endpoint}`, {
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${token}`, // Adiciona o token no cabeçalho
+        Authorization: `Bearer ${token}`, 
         'Content-Type': 'application/json',
       },
     });
@@ -106,8 +106,8 @@ const Dashboard = ({ navigation }) => {
   };
 
   const handleLogout = async () => {
-    await AsyncStorage.removeItem('token'); // Remove o token armazenado
-    navigation.navigate('LoginAdmin'); // Redireciona para a tela de login
+    await AsyncStorage.removeItem('token'); 
+    navigation.navigate('LoginAdmin'); 
   };
 
   return (
