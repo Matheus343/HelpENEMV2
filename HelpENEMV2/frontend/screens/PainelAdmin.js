@@ -1,12 +1,45 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, StyleSheet, Dimensions, ScrollView, TextInput, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  Dimensions,
+  ScrollView,
+  TextInput,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { PieChart } from 'react-native-chart-kit';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import CrudLivros from './CrudLivros';
 import CrudQuestoes from './CrudQuestoes';
 
-const Dashboard = () => {
+const fetchDadosProtegidos = async (endpoint) => {
+  try {
+    const token = await AsyncStorage.getItem('token'); // Recupera o token armazenado
+    const response = await fetch(`http://192.168.15.135:3000/${endpoint}`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`, // Adiciona o token no cabeçalho
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.ok) {
+      return await response.json();
+    } else {
+      throw new Error('Erro ao acessar dados protegidos.');
+    }
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+const Dashboard = ({ navigation }) => {
   const [questoesData, setQuestoesData] = useState([]);
   const [livrosData, setLivrosData] = useState([]);
 
@@ -17,8 +50,7 @@ const Dashboard = () => {
 
   const fetchQuestoesData = async () => {
     try {
-      const response = await fetch('http://192.168.15.135:3000/questoes');
-      const questoes = await response.json();
+      const questoes = await fetchDadosProtegidos('questoes');
 
       const niveis = { facil: 0, medio: 0, dificil: 0 };
 
@@ -32,14 +64,13 @@ const Dashboard = () => {
         { name: 'Difícil', count: niveis.dificil, color: '#F44336', legendFontColor: '#7F7F7F', legendFontSize: 15 },
       ]);
     } catch (error) {
-      console.error('Erro ao buscar dados das questões:', error);
+      Alert.alert('Erro', 'Erro ao buscar dados das questões.');
     }
   };
 
   const fetchLivrosData = async () => {
     try {
-      const response = await fetch('http://192.168.15.135:3000/livros');
-      const livros = await response.json();
+      const livros = await fetchDadosProtegidos('livros');
 
       const materias = {};
 
@@ -70,8 +101,13 @@ const Dashboard = () => {
 
       setLivrosData(chartData);
     } catch (error) {
-      console.error('Erro ao buscar dados dos livros:', error);
+      Alert.alert('Erro', 'Erro ao buscar dados dos livros.');
     }
+  };
+
+  const handleLogout = async () => {
+    await AsyncStorage.removeItem('token'); // Remove o token armazenado
+    navigation.navigate('LoginAdmin'); // Redireciona para a tela de login
   };
 
   return (
@@ -112,69 +148,11 @@ const Dashboard = () => {
         backgroundColor="transparent"
         paddingLeft="15"
         absolute
-      />
-    </ScrollView>
-  );
-};
-
-const ListaAlunos = () => {
-  const [alunos, setAlunos] = useState([]);
-  const [filtroCpf, setFiltroCpf] = useState('');
-
-  useEffect(() => {
-    fetchAlunos();
-  }, []);
-
-  const fetchAlunos = async () => {
-    try {
-      const response = await fetch('http://192.168.15.135:3000/alunos');
-      const data = await response.json();
-      setAlunos(data);
-    } catch (error) {
-      console.error('Erro ao buscar alunos:', error);
-    }
-  };
-
-  const buscarAlunoPorCpf = async () => {
-    if (!filtroCpf.trim()) {
-      fetchAlunos();
-      return;
-    }
-    try {
-      const response = await fetch(`http://192.168.15.135:3000/alunos/${filtroCpf}`);
-      const aluno = await response.json();
-      setAlunos(aluno ? [aluno] : []); 
-    } catch (error) {
-      console.error('Erro ao buscar aluno por CPF:', error);
-    }
-  };
-
-  return (
-    <View style={styles.alunosContainer}>
-      <Text style={styles.title}>Lista de Alunos</Text>
-
-      <TextInput
-        style={styles.input}
-        placeholder="Filtrar por CPF"
-        value={filtroCpf}
-        onChangeText={setFiltroCpf}
-      />
-      <TouchableOpacity style={styles.button} onPress={buscarAlunoPorCpf}>
-        <Text style={styles.buttonText}>Buscar</Text>
+         />      
+      <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+        <Text style={styles.logoutButtonText}>Sair</Text>
       </TouchableOpacity>
-
-      <FlatList
-        data={alunos}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.alunoItem}>
-            <Text style={styles.alunoText}>Nome: {item.nome}</Text>
-            <Text style={styles.alunoText}>CPF: {item.cpf}</Text>
-            <Text style={styles.alunoText}>RA: {item.ra}</Text>
-          </View>
-        )}
-      />
-    </View>
+    </ScrollView>
   );
 };
 
@@ -186,7 +164,6 @@ const PainelAdmin = () => {
       <Drawer.Screen name="Dashboard" component={Dashboard} />
       <Drawer.Screen name="Gerenciar Livros" component={CrudLivros} />
       <Drawer.Screen name="Gerenciar Questões" component={CrudQuestoes} />
-      <Drawer.Screen name="Lista de Alunos" component={ListaAlunos} />
     </Drawer.Navigator>
   );
 };
@@ -238,6 +215,17 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   buttonText: {
+    color: '#fff',
+    fontSize: 16,
+  },
+  logoutButton: {
+    backgroundColor: '#8f5bbd',
+    padding: 10,
+    borderRadius: 50,
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  logoutButtonText: {
     color: '#fff',
     fontSize: 16,
   },
