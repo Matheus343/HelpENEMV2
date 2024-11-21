@@ -18,13 +18,17 @@ export default function App() {
   return (
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Home">
-          <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Cadastro" component={Cadastro} />
-          <Stack.Screen name="Ajuda" component={Ajuda} />
-          <Stack.Screen name="TelaInicio" component={TelaInicio} />
-          <Stack.Screen name="LoginAdmin" component={LoginAdmin} />
-          <Stack.Screen name="PainelAdmin" component={PainelAdmin} />
+          <Stack.Screen 
+            name="Home" 
+            component={Home}
+            options={{ headerShown: false}}
+          />
+          <Stack.Screen name="Login" component={Login} options={{ headerShown: false}} />
+          <Stack.Screen name="Cadastro" component={Cadastro} options={{ headerShown: false}} />
+          <Stack.Screen name="Ajuda" component={Ajuda} options={{ headerShown: false}} />
+          <Stack.Screen name="TelaInicio" component={TelaInicio} options={{ headerShown: false}} />
+          <Stack.Screen name="LoginAdmin" component={LoginAdmin} options={{ headerShown: false}} />
+          <Stack.Screen name="PainelAdmin" component={PainelAdmin} options={{ headerShown: false}} />
           <Stack.Screen name="Biblioteca" component={Biblioteca} />
           <Stack.Screen name="Quiz" component={Quiz} />          
         </Stack.Navigator>
