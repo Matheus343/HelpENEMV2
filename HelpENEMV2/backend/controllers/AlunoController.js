@@ -1,5 +1,19 @@
 const AlunoModel = require('../models/AlunoModel');
 
+exports.buscarPorCpf = (req, res) => {
+  const { cpf } = req.params;
+
+  AlunoModel.findByCpf(cpf, (err, aluno) => {
+    if (err) {
+      return res.status(500).json({ error: 'Erro ao buscar aluno.' });
+    }
+    if (!aluno) {
+      return res.status(404).json({ error: 'Aluno não encontrado.' });
+    }
+    res.status(200).json(aluno);
+  });
+};
+
 exports.register = (req, res) => {
     const { nome, senha, cep, dataNascimento, cpf } = req.body;
   

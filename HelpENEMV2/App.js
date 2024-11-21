@@ -10,13 +10,11 @@ import LoginAdmin from './frontend/screens/LoginAdmin.js';
 import PainelAdmin from './frontend/screens/PainelAdmin';
 import Biblioteca from './frontend/screens/Biblioteca.js';
 
-import { AlunoProvider } from './frontend/context/AlunoContext';
 
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <AlunoProvider>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Home">
           <Stack.Screen name="Home" component={Home} />
@@ -29,7 +27,5 @@ export default function App() {
           <Stack.Screen name="Biblioteca" component={Biblioteca} />
         </Stack.Navigator>
       </NavigationContainer>
-    </AlunoProvider>
-
   );
 }

@@ -1,13 +1,17 @@
 import React, { createContext, useState } from 'react';
 
-export const AlunoContext = createContext();
+export const AlunosContext = createContext();
 
-export const AlunoProvider = ({ children }) => {
-  const [nomeAluno, setNomeAluno] = useState('');
+export const AlunosProvider = ({ children }) => {
+  const [alunos, setAlunos] = useState([]);
+
+  const adicionarAluno = (aluno) => {
+    setAlunos((prevAlunos) => [...prevAlunos, aluno]);
+  };
 
   return (
-    <AlunoContext.Provider value={{ nomeAluno, setNomeAluno }}>
+    <AlunosContext.Provider value={{ alunos, adicionarAluno }}>
       {children}
-    </AlunoContext.Provider>
+    </AlunosContext.Provider>
   );
 };

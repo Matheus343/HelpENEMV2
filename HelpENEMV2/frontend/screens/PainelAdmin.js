@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Dimensions, ScrollView } from 'react-native';
+import { View, Text, FlatList, StyleSheet, Dimensions, ScrollView, TextInput, TouchableOpacity } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { PieChart } from 'react-native-chart-kit';
 
@@ -63,7 +63,7 @@ const Dashboard = () => {
       const chartData = Object.entries(materias).map(([key, value]) => ({
         name: key,
         count: value,
-        color: coresFixas[key] || '#000000', // Cor fixa ou preto como fallback
+        color: coresFixas[key] || '#000000',
         legendFontColor: '#7F7F7F',
         legendFontSize: 15,
       }));
@@ -117,6 +117,67 @@ const Dashboard = () => {
   );
 };
 
+const ListaAlunos = () => {
+  const [alunos, setAlunos] = useState([]);
+  const [filtroCpf, setFiltroCpf] = useState('');
+
+  useEffect(() => {
+    fetchAlunos();
+  }, []);
+
+  const fetchAlunos = async () => {
+    try {
+      const response = await fetch('http://192.168.15.135:3000/alunos');
+      const data = await response.json();
+      setAlunos(data);
+    } catch (error) {
+      console.error('Erro ao buscar alunos:', error);
+    }
+  };
+
+  const buscarAlunoPorCpf = async () => {
+    if (!filtroCpf.trim()) {
+      fetchAlunos();
+      return;
+    }
+    try {
+      const response = await fetch(`http://192.168.15.135:3000/alunos/${filtroCpf}`);
+      const aluno = await response.json();
+      setAlunos(aluno ? [aluno] : []); 
+    } catch (error) {
+      console.error('Erro ao buscar aluno por CPF:', error);
+    }
+  };
+
+  return (
+    <View style={styles.alunosContainer}>
+      <Text style={styles.title}>Lista de Alunos</Text>
+
+      <TextInput
+        style={styles.input}
+        placeholder="Filtrar por CPF"
+        value={filtroCpf}
+        onChangeText={setFiltroCpf}
+      />
+      <TouchableOpacity style={styles.button} onPress={buscarAlunoPorCpf}>
+        <Text style={styles.buttonText}>Buscar</Text>
+      </TouchableOpacity>
+
+      <FlatList
+        data={alunos}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <View style={styles.alunoItem}>
+            <Text style={styles.alunoText}>Nome: {item.nome}</Text>
+            <Text style={styles.alunoText}>CPF: {item.cpf}</Text>
+            <Text style={styles.alunoText}>RA: {item.ra}</Text>
+          </View>
+        )}
+      />
+    </View>
+  );
+};
+
 const Drawer = createDrawerNavigator();
 
 const PainelAdmin = () => {
@@ -125,6 +186,7 @@ const PainelAdmin = () => {
       <Drawer.Screen name="Dashboard" component={Dashboard} />
       <Drawer.Screen name="Gerenciar Livros" component={CrudLivros} />
       <Drawer.Screen name="Gerenciar Questões" component={CrudQuestoes} />
+      <Drawer.Screen name="Lista de Alunos" component={ListaAlunos} />
     </Drawer.Navigator>
   );
 };
@@ -146,6 +208,38 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 20,
     marginBottom: 10,
+  },
+  alunosContainer: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#f5f5f5',
+  },
+  alunoItem: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  alunoText: {
+    fontSize: 16,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 8,
+    padding: 10,
+    marginBottom: 10,
+    backgroundColor: '#fff',
+  },
+  button: {
+    backgroundColor: '#8f5bbd',
+    padding: 10,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
   },
 });
 
